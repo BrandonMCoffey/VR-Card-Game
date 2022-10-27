@@ -7,9 +7,9 @@ public class JoystickInput : MonoBehaviour
     private void Update()
     {
         // Left Joystick
-        Debug.Log(OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick));
+        var leftStick = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick);
         
         // Right Joystick
-        Debug.Log(OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick));
+        var rightStick = OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick);
     }
 }

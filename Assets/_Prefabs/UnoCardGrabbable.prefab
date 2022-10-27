@@ -532,6 +532,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _renderer: {fileID: 6510953256345845878}
   _rb: {fileID: 2686035684798452626}
+  _deckSearchRange: 0.1
   _deck: {fileID: 0}
 --- !u!1 &6510953256345845875
 GameObject:

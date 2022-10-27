@@ -11,11 +11,10 @@ public class UnoDeckController : MonoBehaviour
     [SerializeField] private List<Sprite> _cards;
 
     private UnoCardController _currentCard;
-    private int _totalCards;
+    private const int TotalCards = 60;
 
     private void Start()
     {
-        _totalCards = _cards.Count;
         ShuffleDeck();
         GetNewCard();
     }
@@ -33,15 +32,37 @@ public class UnoDeckController : MonoBehaviour
 
     public void GetNewCard()
     {
+        UpdateDeckSize();
         if (_cards.Count == 0)
         {
-            _deckVisual.gameObject.SetActive(false);
+            _currentCard = null;
             return;
         }
         _currentCard = Instantiate(_cardPrefab, _cardParent);
         _currentCard.SetDeck(this);
-        _currentCard.SetCardSprite(_cards[0]);
-        _cards.RemoveAt(0);
-        _deckVisual.localScale = new Vector3(1, (float)_cards.Count / _totalCards, 1);
+        _currentCard.SetCardSprite(_cards[^1]);
+        _cards.RemoveAt(_cards.Count - 1);
+    }
+
+    public void SetTopCard(UnoCardController card)
+    {
+        if (_currentCard)
+        {
+            _cards.Add(_currentCard.CardSprite);
+            UpdateDeckSize();
+        }
+        else
+        {
+            _currentCard = Instantiate(_cardPrefab, _cardParent);
+        }
+        _currentCard.SetDeck(this);
+        _currentCard.SetCardSprite(card.CardSprite);
+        Destroy(card.gameObject);
+    }
+
+    private void UpdateDeckSize()
+    {
+        var y = Mathf.Clamp01((_cards.Count + 1) / Mathf.Max(1f, TotalCards));
+        _deckVisual.localScale = new Vector3(1, y, 1);
     }
 }

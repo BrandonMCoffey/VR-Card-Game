@@ -12,6 +12,8 @@ public class UnoCardController : MonoBehaviour
     [SerializeField, ReadOnly] private bool _grabbed;
 
     public Sprite CardSprite => _renderer.sprite;
+
+    private bool grabbable = true;
     
     private void Update()
     {
@@ -40,9 +42,12 @@ public class UnoCardController : MonoBehaviour
 
     public void Pickup()
     {
-        Debug.Log("Pickup");
-        if (_deck) ReleaseFromDeck();
-        _grabbed = true;
+        if (grabbable)
+        {
+            Debug.Log("Pickup");
+            if (_deck) ReleaseFromDeck();
+            _grabbed = true;
+        }
     }
 
     public void Release()
@@ -101,5 +106,15 @@ public class UnoCardController : MonoBehaviour
         _deck = null;
         transform.SetParent(null);
         _inDeck = false;
+    }
+
+    public void SetGrabbable(bool g)
+    {
+        grabbable = g;
+    }
+
+    public bool GetGrabble()
+    {
+        return grabbable;
     }
 }

@@ -6,9 +6,11 @@ public class UnoCardController : MonoBehaviour
     [SerializeField] private Rigidbody _rb;
     [SerializeField] private float _deckSearchRange = 0.5f;
     [SerializeField] private UnoDeckController _deck;
+    [SerializeField] private UnoCardHandController _hand;
 
     [Header("Debug")]
     [SerializeField, ReadOnly] private bool _inDeck;
+    [SerializeField, ReadOnly] private bool _inHand;
     [SerializeField, ReadOnly] private bool _grabbed;
 
     public Sprite CardSprite => _renderer.sprite;
@@ -17,10 +19,10 @@ public class UnoCardController : MonoBehaviour
     
     private void Update()
     {
-        if (_inDeck || _grabbed)
+        if (_inDeck || _inHand || _grabbed)
         {
             _rb.Sleep();
-            if (_inDeck)
+            if (_inDeck || _inHand)
             {
                 var t = _rb.transform;
                 t.localPosition = Vector3.zero;
@@ -42,12 +44,10 @@ public class UnoCardController : MonoBehaviour
 
     public void Pickup()
     {
-        if (grabbable)
-        {
-            Debug.Log("Pickup");
-            if (_deck) ReleaseFromDeck();
-            _grabbed = true;
-        }
+        Debug.Log("Pickup");
+        if (_deck) ReleaseFromDeck();
+        if (_hand) ReleaseFromHand();
+        _grabbed = true;
     }
 
     public void Release()
@@ -89,12 +89,16 @@ public class UnoCardController : MonoBehaviour
         {
             Debug.Log("Closest Deck Found");
             closestDeck.SetTopCard(this);
+            _deck = closestDeck;
+            _inDeck = true;
             return true;
         }
         if (closestHand)
         {
             Debug.Log("Closest Hand Found");
             closestHand.AddCardToHand(this);
+            _hand = closestHand;
+            _inHand = true;
             return true;
         }
         return false;
@@ -108,8 +112,17 @@ public class UnoCardController : MonoBehaviour
         _inDeck = false;
     }
 
+    private void ReleaseFromHand()
+    {
+        _hand.ReleaseCardFromHand(this);
+        _hand = null;
+        transform.SetParent(null);
+        _inHand = false;
+    }
+
     public void SetGrabbable(bool g)
     {
+        // TODO: Set Grabbable on child components
         grabbable = g;
     }
 

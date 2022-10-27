@@ -7,10 +7,11 @@ public class UnoCardController : MonoBehaviour
     [SerializeField] private float _deckSearchRange = 0.5f;
     [SerializeField] private UnoDeckController _deck;
 
-    public Sprite CardSprite => _renderer.sprite;
+    [Header("Debug")]
+    [SerializeField, ReadOnly] private bool _inDeck;
+    [SerializeField, ReadOnly] private bool _grabbed;
 
-    private bool _inDeck;
-    private bool _grabbed;
+    public Sprite CardSprite => _renderer.sprite;
     
     private void Update()
     {

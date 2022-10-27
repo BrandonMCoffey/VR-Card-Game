@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,24 +9,35 @@ public class UnoDeckController : MonoBehaviour
     [SerializeField] private Transform _deckVisual;
     [SerializeField] private List<Sprite> _cards;
 
-    private UnoCardController _currentCard;
+    [Header("Debug")]
+    [SerializeField, ReadOnly] private UnoCardController _currentCard;
+    
     private const int TotalCards = 60;
 
     private void Start()
     {
-        ShuffleDeck();
+        // Why?
+        Random.InitState(System.DateTime.Now.Millisecond);
         GetNewCard();
+        ShuffleDeck();
     }
 
+    [Button(Spacing = 10, Mode = ButtonMode.InPlayMode)]
     private void ShuffleDeck()
     {
+        if (_cards.Count == 0) return;
         var count = _cards.Count;
-        var last = count - 1;
-        for (var i = 0; i < last; ++i)
+        for (var i = 0; i < count - 1; ++i)
         {
-            var r = UnityEngine.Random.Range(i, count);
+            var r = Random.Range(i, count);
             (_cards[i], _cards[r]) = (_cards[r], _cards[i]);
         }
+        
+        // Randomize Top Card
+        var rand = Random.Range(0, _cards.Count);
+        var s = _currentCard.CardSprite;
+        _currentCard.SetCardSprite(_cards[rand]);
+        _cards[rand] = s;
     }
 
     public void GetNewCard()

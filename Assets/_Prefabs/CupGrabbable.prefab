@@ -158,8 +158,8 @@ MonoBehaviour:
   _physicsGrabbable: {fileID: 0}
   _scoringModifier:
     _maxDistance: 0.1
-    _positionRotationWeight: 0
-  _supportedGrabTypes: -1
+    _positionRotationWeight: 0.5
+  _supportedGrabTypes: 2
   _pinchGrabRules:
     _thumbRequirement: 1
     _indexRequirement: 1
@@ -242,7 +242,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2013126833142141974}
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -323,7 +323,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2856996066937332230}
-  - component: {fileID: 7767035270892257448}
   m_Layer: 0
   m_Name: Root
   m_TagString: Untagged
@@ -338,7 +337,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3638611345935716492}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -346,20 +345,7 @@ Transform:
   - {fileID: 5927426705860654429}
   m_Father: {fileID: 3097844349352417695}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!65 &7767035270892257448
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3638611345935716492}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.059, y: 0.089, z: 0.002}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3689227439940279790
 GameObject:
   m_ObjectHideFlags: 0
@@ -708,7 +694,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interactables:
   - {fileID: 5842142744542941002}
-  - {fileID: 0}
+  - {fileID: 3112813861436968469}
   _data: {fileID: 0}
 --- !u!1 &6127547685549270553
 GameObject:
@@ -767,8 +753,8 @@ MonoBehaviour:
   _physicsGrabbable: {fileID: 0}
   _scoringModifier:
     _maxDistance: 0.1
-    _positionRotationWeight: 0
-  _supportedGrabTypes: -1
+    _positionRotationWeight: 0.5
+  _supportedGrabTypes: 2
   _pinchGrabRules:
     _thumbRequirement: 1
     _indexRequirement: 1

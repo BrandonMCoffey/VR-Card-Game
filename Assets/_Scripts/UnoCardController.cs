@@ -88,20 +88,23 @@ public class UnoCardController : MonoBehaviour
         if (closestDeck)
         {
             Debug.Log("Closest Deck Found");
-            closestDeck.SetTopCard(this);
-            _deck = closestDeck;
-            _inDeck = true;
+            PlaceCardInDeck(closestDeck);
             return true;
         }
         if (closestHand)
         {
             Debug.Log("Closest Hand Found");
-            closestHand.AddCardToHand(this);
-            _hand = closestHand;
-            _inHand = true;
+            PlaceCardInHand(closestHand);
             return true;
         }
         return false;
+    }
+
+    public void PlaceCardInDeck(UnoDeckController deck)
+    {
+        deck.SetTopCard(this);
+        _deck = deck;
+        _inDeck = true;
     }
 
     private void ReleaseFromDeck()
@@ -110,6 +113,13 @@ public class UnoCardController : MonoBehaviour
         _deck = null;
         transform.SetParent(null);
         _inDeck = false;
+    }
+
+    public void PlaceCardInHand(UnoCardHandController hand)
+    {
+        hand.AddCardToHand(this);
+        _hand = hand;
+        _inHand = true;
     }
 
     private void ReleaseFromHand()

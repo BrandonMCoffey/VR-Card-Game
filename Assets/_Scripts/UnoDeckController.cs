@@ -11,6 +11,8 @@ public class UnoDeckController : MonoBehaviour
 
     [Header("Debug")]
     [SerializeField, ReadOnly] private UnoCardController _currentCard;
+
+    public UnoCardController CurrentCard => _currentCard;
     
     private const int TotalCards = 60;
 

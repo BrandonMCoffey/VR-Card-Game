@@ -7,7 +7,9 @@ public class UnoCardHandController : MonoBehaviour
     [SerializeField] private float _handOffset = 0.25f;
     [SerializeField] private float _cardOffset = 10f;
 
-    private List<UnoCardController> _controllers = new List<UnoCardController>();
+    [SerializeField, ReadOnly] private List<UnoCardController> _controllers = new List<UnoCardController>();
+
+    public UnoCardController FirstCard => _controllers.Count > 0 ? _controllers[0] : null;
 
     public void AddCardToHand(UnoCardController card)
     {

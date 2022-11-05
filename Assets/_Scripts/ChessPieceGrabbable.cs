@@ -32,6 +32,7 @@ public class ChessPieceGrabbable : MonoBehaviour
 		}
 	}
     
+	[Button]
 	public void Pickup()
 	{
 		Debug.Log("Pickup");
@@ -39,6 +40,7 @@ public class ChessPieceGrabbable : MonoBehaviour
 		_grabbed = true;
 	}
 
+	[Button]
 	public void Release()
 	{
 		Debug.Log("Release");
@@ -56,24 +58,32 @@ public class ChessPieceGrabbable : MonoBehaviour
 		float dist = _socketSearchRange * 2;
 		foreach (Collider col in colliders)
 		{
-			var root = col.transform.root;
-			if (Vector3.Distance(pos, root.position) < dist)
+			var colDist = Vector3.Distance(pos, col.transform.position);
+			if (colDist < dist)
 			{
-				var socket = root.GetComponent<ChessBoardSocket>();
+				var socket = col.GetComponent<ChessBoardSocket>();
 				if (socket && socket.CanPlacePiece) {
 					closestSocket = socket;
+					dist = colDist;
 				}
 			}
 		}
 		if (closestSocket)
 		{
 			Debug.Log("Closest Socket Found");
-			closestSocket.SetPiece(this);
-			_socket = closestSocket;
-			_inSocket = true;
+			PlaceInSocket(closestSocket);
 			return true;
 		}
 		return false;
+	}
+
+	private void PlaceInSocket(ChessBoardSocket socket)
+	{
+		socket.SetPiece(this);
+		transform.SetParent(socket.transform);
+		transform.localPosition = Vector3.zero;
+		_socket = socket;
+		_inSocket = true;
 	}
 
 	private void ReleaseFromSocket()

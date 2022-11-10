@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +13,8 @@ public class UnoCardHandController : MonoBehaviour
 
     public UnoCardController FirstCard => _controllers.Count > 0 ? _controllers[0] : null;
 
+	public Action OnPlaceCard = delegate { };
+	
 	private void Start()
 	{
 		if (!_handPivot) _handPivot = transform;
@@ -25,7 +28,8 @@ public class UnoCardHandController : MonoBehaviour
         //_controllers[_controllers.Count - 1].SetCardSprite(card.CardSprite);
         //_controllers[_controllers.Count - 1].SetGrabbable(false);
 
-        //Destroy(card.gameObject);
+	    //Destroy(card.gameObject);
+	    OnPlaceCard?.Invoke();
     }
 
     public void ReleaseCardFromHand(UnoCardController card)

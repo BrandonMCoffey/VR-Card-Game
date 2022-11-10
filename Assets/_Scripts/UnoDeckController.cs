@@ -8,17 +8,18 @@ public class UnoDeckController : MonoBehaviour
     [SerializeField] private Transform _cardParent;
     [SerializeField] private UnoCardController _cardPrefab;
     [SerializeField] private Transform _deckVisual;
-    [SerializeField] private List<Sprite> _cards;
+	[SerializeField] private List<Sprite> _cards;
+	[SerializeField] private List<unoData> _data = new List<unoData>();
 	[SerializeField] private bool discardPile = false;
     
 	public Action OnCardPlaced = delegate { };
-
+	public Action OnGrabCard = delegate { };
+	
+	[Serializable]
     struct unoData{
         public int value;
         public int color;
     }
-
-    private List<unoData> _data = new List<unoData>();
 
     [Header("Debug")]
     [SerializeField, ReadOnly] private UnoCardController _currentCard;
@@ -27,14 +28,13 @@ public class UnoDeckController : MonoBehaviour
 
     private const int TotalCards = 60;
 
-    private void Start()
+	private void Awake()
     {
         // Why?
 	    UnityEngine.Random.InitState(System.DateTime.Now.Millisecond);
         GiveCardsValuesAndColors();
         GetNewCard();
         ShuffleDeck();
-        Debug.Log("End Start");
     }
 
     private void GiveCardsValuesAndColors()
@@ -113,7 +113,7 @@ public class UnoDeckController : MonoBehaviour
         _currentCard.SetValue(_data[rand].value);
     }
 
-    public void GetNewCard()
+	public void GetNewCard(bool invokeEvents = true)
     {
         UpdateDeckSize();
         if (_cards.Count == 0)
@@ -127,10 +127,11 @@ public class UnoDeckController : MonoBehaviour
         _currentCard.SetColor(_data[^1].color);
         _currentCard.SetValue(_data[^1].value);
         _cards.RemoveAt(_cards.Count - 1);
-        _data.RemoveAt(_data.Count - 1);
+	    _data.RemoveAt(_data.Count - 1);
+	    if (invokeEvents) OnGrabCard?.Invoke();
     }
 
-    public void SetTopCard(UnoCardController card)
+	public void SetTopCard(UnoCardController card, bool invokeEvents = true)
     {
         if (_currentCard)
         {
@@ -148,7 +149,7 @@ public class UnoDeckController : MonoBehaviour
         _currentCard.SetDeck(this);
         _currentCard.SetCardSprite(card.CardSprite);
 	    Destroy(card.gameObject);
-	    OnCardPlaced?.Invoke();
+	    if (invokeEvents) OnCardPlaced?.Invoke();
     }
 
     private void UpdateDeckSize()

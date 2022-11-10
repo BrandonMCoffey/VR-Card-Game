@@ -14,6 +14,8 @@ public class UnoCardController : MonoBehaviour
     [SerializeField, ReadOnly] private bool _grabbed;
 
     public Sprite CardSprite => _renderer.sprite;
+    private int cardValue;
+    private int color;
 
     private bool grabbable = true;
     
@@ -40,6 +42,26 @@ public class UnoCardController : MonoBehaviour
     {
         _inDeck = true;
         _deck = deck;
+    }
+
+    public void SetValue(int v)
+    {
+        cardValue = v;
+    }
+
+    public void SetColor(int c)
+    {
+        color = c;
+    }
+
+    public int GetValue()
+    {
+        return cardValue;
+    }
+
+    public int GetColor()
+    {
+        return color;
     }
 
     public void Pickup()
@@ -74,8 +96,19 @@ public class UnoCardController : MonoBehaviour
                 var deck = root.GetComponent<UnoDeckController>();
                 if (deck)
                 {
-                    closestDeck = deck;
-                    closestHand = null;
+                    if (deck.IsDiscard() & !deck.IsEmpty())
+                    {
+                        if(deck.CurrentCard.GetColor() == 5 || color == 5 || deck.CurrentCard.GetColor() == color || deck.CurrentCard.GetValue() == cardValue)
+                        {
+                            closestDeck = deck;
+                            closestHand = null;
+                        }
+                    }
+                    else
+                    {
+                        closestDeck = deck;
+                        closestHand = null;
+                    }
                 }
                 var hand = root.GetComponent<UnoCardHandController>();
                 if (hand)

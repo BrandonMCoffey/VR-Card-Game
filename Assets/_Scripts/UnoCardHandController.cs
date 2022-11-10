@@ -37,8 +37,8 @@ public class UnoCardHandController : MonoBehaviour
             var t = _controllers[i].transform;
             var pos = transform.position;
             t.position = new Vector3(pos.x, pos.y + _handOffset, pos.z);
-            t.RotateAround(pos, Vector3.forward, (i * _cardOffset) - (_cardOffset * (_controllers.Count - 1f / 2f)));
-            t.rotation = Quaternion.identity;
+            t.rotation = Quaternion.Euler(270f, 0f, 0f);
+            t.RotateAround(pos, Vector3.forward, (i * _cardOffset) - (_cardOffset * ((_controllers.Count - 1f) / 2f)));
         }
     }
 }

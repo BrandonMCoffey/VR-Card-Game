@@ -1,3 +1,4 @@
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,9 @@ public class UnoDeckController : MonoBehaviour
     [SerializeField] private UnoCardController _cardPrefab;
     [SerializeField] private Transform _deckVisual;
     [SerializeField] private List<Sprite> _cards;
-    [SerializeField] private bool discardPile = false;
+	[SerializeField] private bool discardPile = false;
+    
+	public Action OnCardPlaced = delegate { };
 
     struct unoData{
         public int value;
@@ -27,7 +30,7 @@ public class UnoDeckController : MonoBehaviour
     private void Start()
     {
         // Why?
-        Random.InitState(System.DateTime.Now.Millisecond);
+	    UnityEngine.Random.InitState(System.DateTime.Now.Millisecond);
         GiveCardsValuesAndColors();
         GetNewCard();
         ShuffleDeck();
@@ -96,13 +99,13 @@ public class UnoDeckController : MonoBehaviour
         var count = _cards.Count;
         for (var i = 0; i < count - 1; ++i)
         {
-            var r = Random.Range(i, count);
+            var r = UnityEngine.Random.Range(i, count);
             (_cards[i], _cards[r]) = (_cards[r], _cards[i]);
             (_data[i], _data[r]) = (_data[r], _data[i]);
         }
         
         // Randomize Top Card
-        var rand = Random.Range(0, _cards.Count);
+	    var rand = UnityEngine.Random.Range(0, _cards.Count);
         var s = _currentCard.CardSprite;
         _currentCard.SetCardSprite(_cards[rand]);
         _cards[rand] = s;
@@ -144,7 +147,8 @@ public class UnoDeckController : MonoBehaviour
         _data.Add(ud);
         _currentCard.SetDeck(this);
         _currentCard.SetCardSprite(card.CardSprite);
-        Destroy(card.gameObject);
+	    Destroy(card.gameObject);
+	    OnCardPlaced?.Invoke();
     }
 
     private void UpdateDeckSize()

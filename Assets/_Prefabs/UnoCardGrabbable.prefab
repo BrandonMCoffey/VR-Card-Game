@@ -139,14 +139,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2397178190174306224}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0.0002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7427405998161059846}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!212 &3502117453893330520
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -534,6 +534,10 @@ MonoBehaviour:
   _rb: {fileID: 2686035684798452626}
   _deckSearchRange: 0.1
   _deck: {fileID: 0}
+  _hand: {fileID: 0}
+  _inDeck: 0
+  _inHand: 0
+  _grabbed: 0
 --- !u!1 &6510953256345845875
 GameObject:
   m_ObjectHideFlags: 0

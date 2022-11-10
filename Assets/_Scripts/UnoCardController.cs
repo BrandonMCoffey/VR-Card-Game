@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class UnoCardController : MonoBehaviour
 {
@@ -91,7 +91,7 @@ public class UnoCardController : MonoBehaviour
         foreach (Collider col in colliders)
         {
             var root = col.transform.root;
-            if (Vector3.Distance(pos, root.position) < dist)
+	        if (Vector3.Distance(pos, root.GetChild(0).position) < dist)
             {
                 var deck = root.GetComponent<UnoDeckController>();
                 if (deck)
